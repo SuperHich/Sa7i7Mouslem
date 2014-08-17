@@ -22,7 +22,7 @@
             android:layout_width="444px"
             android:layout_height="95px" 
             android:layout_centerHorizontal="true"
-            android:background="@drawable/sahih_boukhari"/>
+            android:background="@drawable/sahih_moslem"/>
         
         <Button
             android:id="@+id/menu"

@@ -33,9 +33,9 @@ import com.sa7i7mouslem.externals.SABManager;
 import com.sa7i7mouslem.mediaplayer.IMediaPlayerNotifier;
 import com.sa7i7mouslem.mediaplayer.SABMediaPlayer;
 import com.sa7i7mouslem.utils.LoadMoreListView;
+import com.sa7i7mouslem.utils.LoadMoreListView.OnLoadMoreListener;
 import com.sa7i7mouslem.utils.MySuperScaler;
 import com.sa7i7mouslem.utils.Utils;
-import com.sa7i7mouslem.utils.LoadMoreListView.OnLoadMoreListener;
 
 
 public class AhadithFragment extends ListFragment implements IHadtihListener, IMediaPlayerNotifier, IDownloadNotifier, IFragmentNotifier{
@@ -265,8 +265,10 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	}
 	
 	private void cleanPreviousPlayer(int position){
+		sabPlayer.stop();
 		ahadith.get(position).setBottomLayoutShown(false);
-		adapter.notifyDataSetChanged();
+		ahadith.get(position).setPlaying(false);
+		mSeekBar.setProgress(0);
 	}
 
 	@Override

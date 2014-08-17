@@ -229,6 +229,7 @@ public class AhadithAdapter extends ArrayAdapter<Hadith> {
 			holder.bottom_layout.setBackgroundResource(R.drawable.player_bg);
 			
 			holder.btn_pause.setVisibility(View.VISIBLE);
+			holder.btn_pause.setBackgroundResource(R.drawable.stop);
 			
 			holder.mTxvProgress.setText("00:00");
 			
