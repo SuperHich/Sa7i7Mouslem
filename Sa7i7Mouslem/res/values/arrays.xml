@@ -1,0 +1,13 @@
+<resources>
+
+    <integer-array name="menu_drawables">
+        <item>@drawable/favourites_list</item>
+        <item>@drawable/show_ahadith</item>
+        <item>@drawable/ta3li9aty</item>
+        <item>@drawable/show_abweb</item>
+        <item>@drawable/show_fahras</item>
+        <item>@drawable/about_chabaka</item>
+        <item>@drawable/about</item>
+    </integer-array>
+
+</resources>

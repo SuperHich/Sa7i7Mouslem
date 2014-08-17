@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="560px"
+    android:layout_height="wrap_content"
+    android:layout_margin="10px"
+    android:background="#fff" >
+
+    <TextView
+        android:id="@+id/txv_title_comment"
+        android:layout_width="520px"
+        android:layout_height="wrap_content"
+        android:text="title"
+        android:gravity="right"
+        android:textColor="#497188" />
+
+    <TextView
+        android:id="@+id/txv_text_comment"
+        android:layout_width="520px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:textColor="#767879" 
+        android:text="content"
+        android:gravity="right"
+        android:layout_below="@+id/txv_title_comment"/>
+    
+</RelativeLayout>

@@ -1,0 +1,12 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350px"
+    android:layout_height="72px"
+    android:layout_gravity="right" >
+
+    <ImageView
+        android:id="@+id/trim1"
+        android:layout_width="350px"
+        android:layout_height="75px"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>

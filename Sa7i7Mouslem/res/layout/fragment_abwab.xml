@@ -1,0 +1,11 @@
+
+<com.sa7i7mouslem.utils.LoadMoreListView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+   	android:id="@+id/android:list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:scrollingCache="false"
+    android:layout_margin="10px" 
+    android:divider="@color/blue_turquoise"
+    android:dividerHeight="5px"/>

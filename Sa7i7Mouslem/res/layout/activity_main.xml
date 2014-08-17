@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/principal_layout"
+    android:layout_width="640px"
+    android:layout_height="1136px"
+    android:layout_gravity="center"
+    android:background="#39acdd" >
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="640px"
+        android:layout_height="95px" 
+        android:background="#1a435d">
+
+        <Button
+            android:id="@+id/search"
+            android:layout_width="98px"
+            android:layout_height="95px" 
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/search"/>
+        
+          <ImageView
+            android:layout_width="444px"
+            android:layout_height="95px" 
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/sahih_boukhari"/>
+        
+        <Button
+            android:id="@+id/menu"
+            android:layout_width="98px"
+            android:layout_height="95px" 
+            android:layout_alignParentRight="true"
+            android:background="@drawable/menu"/>
+    </RelativeLayout>
+
+    <android.support.v4.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/drawer_layout"
+        android:layout_below="@id/top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ListView
+            android:id="@+id/right_drawer"
+            android:layout_width="350px"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="#2f3d4c"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp" />
+
+
+    </android.support.v4.widget.DrawerLayout>
+    
+    <FrameLayout
+        android:id="@+id/fragment_view"
+        android:layout_width="640px"
+    	android:layout_height="1136px">
+    </FrameLayout>
+    
+    <FrameLayout
+        android:id="@+id/new_fragment_view"
+        android:layout_width="640px"
+    	android:layout_height="1136px">
+    </FrameLayout>
+
+</RelativeLayout>

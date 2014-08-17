@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="640px"
+    android:layout_height="1136px"
+    android:background="@color/shadow_transparent_light" >
+
+    <RelativeLayout
+        android:layout_width="640px"
+        android:layout_height="1136px"
+        android:layout_marginLeft="80px"
+        android:layout_marginTop="100px"
+        android:background="@color/blue_light" >
+
+        <TextView
+            android:id="@+id/txv_name"
+            android:layout_width="110px"
+            android:layout_height="50px"
+            android:layout_marginTop="60px"
+            android:layout_marginRight="10px"
+            android:layout_marginBottom="10px"
+            android:layout_marginLeft="10px"
+            android:text="@string/comment_name"
+            android:textColor="@android:color/black" 
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:id="@+id/txv_comment"
+            android:layout_width="110px"
+            android:layout_height="50px"
+            android:layout_below="@+id/txv_name"
+            android:layout_margin="10px"
+            android:text="@string/comment_text"
+            android:textColor="@android:color/black" 
+            android:layout_alignParentRight="true"/>
+
+        <EditText
+            android:id="@+id/edt_name"
+            android:layout_width="396px"
+            android:layout_height="41px"
+           	android:layout_marginTop="60px"
+            android:layout_marginRight="10px"
+            android:layout_marginBottom="10px"
+            android:layout_marginLeft="10px"
+            android:layout_toLeftOf="@+id/txv_name" 
+            android:textColor="@android:color/black"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"
+            android:paddingTop="5px"
+            android:gravity="top|right"
+            android:background="@drawable/rounded_background"/>
+
+        <EditText
+            android:id="@+id/edt_comment"
+            android:layout_width="396px"
+            android:layout_height="246px"
+            android:layout_below="@+id/edt_name"
+            android:layout_margin="10px"
+            android:layout_toLeftOf="@+id/txv_comment"
+            android:textColor="@android:color/black"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"
+            android:paddingTop="5px"
+            android:gravity="top|right"
+            android:background="@drawable/rounded_background"/>
+
+        <Button
+            android:id="@+id/btn_remove"
+            android:layout_width="95px"
+            android:layout_height="35px"
+            android:layout_below="@+id/edt_comment"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="30px"
+            android:background="@drawable/cancel_selector" />
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="95px"
+            android:layout_height="35px"
+            android:layout_below="@+id/edt_comment"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="30px"
+            android:layout_toRightOf="@+id/btn_remove"
+            android:background="@drawable/add_selector" />
+    </RelativeLayout>
+
+</RelativeLayout>

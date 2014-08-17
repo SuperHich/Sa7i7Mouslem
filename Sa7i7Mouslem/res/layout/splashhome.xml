@@ -1,0 +1,12 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/principal_layout"
+    android:layout_width="640px"
+    android:layout_height="1136px"
+    android:layout_gravity="center">
+    
+    <ImageView android:layout_width="640px"
+        android:layout_height="1136px"
+        android:src="@drawable/splashhome"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>
