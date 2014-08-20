@@ -23,7 +23,7 @@ import com.sa7i7mouslem.entity.Hadith;
 
 public class SABDataBase extends SQLiteAssetHelper {
 
-    private static final String DATABASE_NAME = "bou5ari.db";
+    private static final String DATABASE_NAME = "moslem.db";
     private static final int DATABASE_VERSION = 1;
     
     public SABDataBase(Context context) {
