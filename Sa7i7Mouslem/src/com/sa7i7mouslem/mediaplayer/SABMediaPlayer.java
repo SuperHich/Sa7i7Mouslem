@@ -230,6 +230,8 @@ public class SABMediaPlayer {
 					{
 						stop();		
 					}
+					
+					notifier.onErrorPlayer();
 
 				}
 

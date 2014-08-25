@@ -11,4 +11,5 @@ public interface IMediaPlayerNotifier {
 	void onCompletion();
 	void onConfigProgress(int totalTime);
 	void onProgressPlayer(int progress);
+	void onErrorPlayer();
 }

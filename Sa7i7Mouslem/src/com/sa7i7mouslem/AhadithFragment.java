@@ -514,6 +514,14 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 		});
 	}
 	
+	@Override
+	public void onErrorPlayer() {
+		Toast.makeText(getActivity(), R.string.player_error, Toast.LENGTH_LONG).show();
+		
+		cleanPreviousPlayer(positionToListen);
+		adapter.notifyDataSetChanged();
+	}
+	
 	private String MillisToTime(int timeInMillis){
 		String min = String.valueOf(TimeUnit.MILLISECONDS.toMinutes(timeInMillis));
 		int m = Integer.valueOf(min);

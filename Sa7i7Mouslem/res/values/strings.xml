@@ -45,4 +45,5 @@
     <string name="remove">حذف</string>
     <string name="update">تحديث</string>
     <string name="modifications">تعديل التعليق</string>
+    <string name="player_error">خطأ أثناء تدفق هذا الصوت</string>
 </resources>
