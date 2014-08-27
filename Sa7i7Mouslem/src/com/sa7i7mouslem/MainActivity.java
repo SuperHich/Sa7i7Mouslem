@@ -534,10 +534,12 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 				return;
 			}
 			
-			if(currentFragment.equals(ADD_COMMENT_FRAGMENT))
-				currentFragment = COMMENTS_FRAGMENT;
-			else if(currentFragment.equals(COMMENTS_FRAGMENT))
-				currentFragment = AHADITH_FRAGMENT;
+			if(currentFragment != null){
+				if(currentFragment.equals(ADD_COMMENT_FRAGMENT))
+					currentFragment = COMMENTS_FRAGMENT;
+				else if(currentFragment.equals(COMMENTS_FRAGMENT))
+					currentFragment = AHADITH_FRAGMENT;
+			}
 			
 			if(fragment2 != null){
 				fragment2 = null;
