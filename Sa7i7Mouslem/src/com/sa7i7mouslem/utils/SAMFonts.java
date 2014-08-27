@@ -14,7 +14,7 @@ public class SAMFonts {
 	private static Typeface MOHAND;
 	
 	public static void InitSAMFonts(Context context){
-		MOHAND  = Typeface.createFromAsset(context.getAssets(), "fonts/GS45_Arab_AndroidOS.ttf");
+		MOHAND  = Typeface.createFromAsset(context.getAssets(), "fonts/ae_AlMohanad.ttf");
 	}
 
 	public static Typeface getMOHANDFont() {
