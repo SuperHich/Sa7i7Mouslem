@@ -78,6 +78,8 @@ public class AhadithAdapter extends ArrayAdapter<Hadith> {
 				
 				@Override
 				public void onClick(View v) {
+					if(!isEnabled())
+						return;
 					int position = (Integer)(v.getTag());	
 					listener.onHadithTextClicked(position);
 				}

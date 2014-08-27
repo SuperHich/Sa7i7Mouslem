@@ -456,6 +456,8 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 
 			scaled = false;
 			transaction.commit();
+			
+			currentFragment = COMMENTS_FRAGMENT;
 
 			setEnabled(false);
 		}
@@ -483,6 +485,8 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 			scaled = false;
 			transaction.commit();
 			
+			currentFragment = ADD_COMMENT_FRAGMENT;
+			
 			sabManager.getFragmentNotifier2().setEnabled(false);
 		}
 		
@@ -497,7 +501,7 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 		@Override
 		public void onBackPressed() {
 			
-			if(isBackEnabled)
+			if(isBackEnabled && !currentFragment.equals(COMMENTS_FRAGMENT) && !currentFragment.equals(ADD_COMMENT_FRAGMENT))
 			{		
 				if(currentFragment.equals(AHADITH_FRAGMENT))
 				{
@@ -529,6 +533,11 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 				
 				return;
 			}
+			
+			if(currentFragment.equals(ADD_COMMENT_FRAGMENT))
+				currentFragment = COMMENTS_FRAGMENT;
+			else if(currentFragment.equals(COMMENTS_FRAGMENT))
+				currentFragment = AHADITH_FRAGMENT;
 			
 			if(fragment2 != null){
 				fragment2 = null;

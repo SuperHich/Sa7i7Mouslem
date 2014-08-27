@@ -9,8 +9,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,6 +21,7 @@ import com.sa7i7mouslem.entity.Comment;
 import com.sa7i7mouslem.externals.SAMDataBase;
 import com.sa7i7mouslem.externals.SAMManager;
 import com.sa7i7mouslem.utils.MySuperScaler;
+import com.sa7i7mouslem.utils.SAMFonts;
 
 @SuppressLint("ValidFragment")
 public class AddCommentFragment extends Fragment {
@@ -72,6 +73,11 @@ public class AddCommentFragment extends Fragment {
         edt_comment.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         txv_name.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         txv_comment.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        
+        txv_name.setTypeface(SAMFonts.getMOHANDFont());
+        txv_comment.setTypeface(SAMFonts.getMOHANDFont());
+        edt_name.setTypeface(SAMFonts.getMOHANDFont());
+        edt_comment.setTypeface(SAMFonts.getMOHANDFont());
 
         btn_remove.setOnClickListener(new OnClickListener() {
 			

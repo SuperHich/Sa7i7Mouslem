@@ -39,6 +39,7 @@ import com.sa7i7mouslem.mediaplayer.SABMediaPlayer;
 import com.sa7i7mouslem.utils.LoadMoreListView;
 import com.sa7i7mouslem.utils.LoadMoreListView.OnLoadMoreListener;
 import com.sa7i7mouslem.utils.MySuperScaler;
+import com.sa7i7mouslem.utils.SAMFonts;
 import com.sa7i7mouslem.utils.Utils;
 
 
@@ -105,6 +106,7 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 		bab_id = getArguments().getInt(ARG_BAB_ID);
 		
 		txv_emptyList = (TextView) rootView.findViewById(R.id.txv_emptyList);
+		txv_emptyList.setTypeface(SAMFonts.getMOHANDFont());
 		
 		if(!(MySuperScaler.scaled))
 			MySuperScaler.scaleViewAndChildren(rootView, MySuperScaler.scale);
