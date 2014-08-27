@@ -46,4 +46,6 @@
     <string name="update">تحديث</string>
     <string name="modifications">تعديل التعليق</string>
     <string name="player_error">خطأ أثناء تدفق هذا الصوت</string>
+    <string name="copy">نسخ الحديث</string>
+    <string name="hadith_copied">تم نسخ الحديث</string>
 </resources>

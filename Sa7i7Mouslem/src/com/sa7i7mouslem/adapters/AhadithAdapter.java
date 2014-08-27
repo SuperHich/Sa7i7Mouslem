@@ -21,8 +21,9 @@ import android.widget.TextView;
 
 import com.sa7i7mouslem.R;
 import com.sa7i7mouslem.entity.Hadith;
-import com.sa7i7mouslem.externals.SABDataBase;
+import com.sa7i7mouslem.externals.SAMDataBase;
 import com.sa7i7mouslem.utils.MySuperScaler;
+import com.sa7i7mouslem.utils.SAMFonts;
 
 public class AhadithAdapter extends ArrayAdapter<Hadith> {
 
@@ -70,6 +71,18 @@ public class AhadithAdapter extends ArrayAdapter<Hadith> {
 			holder.mSeekBar = (SeekBar) convertView.findViewById(R.id.seekbar_progress);
 			holder.mTxvProgress = (TextView) convertView.findViewById(R.id.txv_progress);
 			
+			holder.textview.setTypeface(SAMFonts.getMOHANDFont());
+			holder.mTxvProgress.setTypeface(SAMFonts.getMOHANDFont());
+						
+			holder.textview.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					int position = (Integer)(v.getTag());	
+					listener.onHadithTextClicked(position);
+				}
+			});
+
 			holder.btn_showMore.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -157,6 +170,7 @@ public class AhadithAdapter extends ArrayAdapter<Hadith> {
 		holder.textview.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
 		holder.mTxvProgress.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
 
+		holder.textview.setTag(position);
 		holder.btn_showMore.setTag(position);
 		holder.btn_listen.setTag(position);
 		holder.btn_pause.setTag(position);
@@ -173,12 +187,12 @@ public class AhadithAdapter extends ArrayAdapter<Hadith> {
 
 		if(hadith.isShown()){
 			holder.textview.setMaxLines(Integer.MAX_VALUE);
-			holder.textview.setText(Html.fromHtml(SABDataBase.formatHadith(hadith.getText()).concat(".")));
+			holder.textview.setText(Html.fromHtml(SAMDataBase.formatHadith(hadith.getText()).concat(".")));
 			holder.btn_showMore.setBackgroundResource(R.drawable.showless_selector);
 		}
 		else{
 			holder.textview.setMaxLines(2);
-			holder.textview.setText(Html.fromHtml(SABDataBase.formatHadith(hadith.getText()).concat(" ... ")));
+			holder.textview.setText(Html.fromHtml(SAMDataBase.formatHadith(hadith.getText()).concat(" ... ")));
 			holder.btn_showMore.setBackgroundResource(R.drawable.showmore_selector);
 		}
 

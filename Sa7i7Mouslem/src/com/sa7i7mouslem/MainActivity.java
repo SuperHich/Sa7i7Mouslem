@@ -26,7 +26,7 @@ import com.sa7i7mouslem.entity.Book;
 import com.sa7i7mouslem.entity.Chapter;
 import com.sa7i7mouslem.entity.Comment;
 import com.sa7i7mouslem.entity.Hadith;
-import com.sa7i7mouslem.externals.SABDataBase;
+import com.sa7i7mouslem.externals.SAMDataBase;
 import com.sa7i7mouslem.utils.MySuperScaler;
 
 
@@ -49,7 +49,7 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 	private ListView mDrawerList;
 	private Button btn_menu, btn_search;
 
-	public SABDataBase sabDB;
+	public SAMDataBase sabDB;
 
 	private ActionBarDrawerToggle mDrawerToggle;
 	RelativeLayout mainView ;
@@ -70,7 +70,7 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		sabDB = new SABDataBase(this);
+		sabDB = new SAMDataBase(this);
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.right_drawer);
@@ -137,7 +137,7 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 		super.onResume();
 
 		if(sabDB == null){
-			sabDB = new SABDataBase(this);
+			sabDB = new SAMDataBase(this);
 		}
 
 	}
@@ -236,7 +236,7 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 			fragment.setArguments(args);
 
 //		if(position != 0)
-			switchTab(fragment);
+			switchTab(fragment, false);
 
 		// update selected item and title, then close the drawer
 		mDrawerList.setItemChecked(position, true);
@@ -245,11 +245,14 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 	}
 
 
-	private void switchTab(Fragment tab) {
+	private void switchTab(Fragment tab, boolean withAnimation) {
 		FragmentManager fm = getSupportFragmentManager();
 		Fragment fragment = fm.findFragmentById(R.id.content_frame);
 
 		final FragmentTransaction ft = fm.beginTransaction();
+		if(withAnimation)
+			ft.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
+		
 		if (fragment == null) {
 			ft.add(R.id.content_frame, tab);
 
@@ -377,7 +380,8 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			FragmentTransaction ft = fragmentManager.beginTransaction();
-
+			ft.setCustomAnimations(R.anim.right_in, R.anim.right_out, R.anim.left_in, R.anim.left_out);
+			
 			ft.replace(R.id.content_frame, fragment);
 			scaled = false ;
 			ft.commit();
@@ -402,7 +406,8 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			FragmentTransaction ft = fragmentManager.beginTransaction();
-
+			ft.setCustomAnimations(R.anim.right_in, R.anim.right_out, R.anim.left_in, R.anim.left_out);
+			
 			ft.replace(R.id.content_frame, fragment);
 			scaled = false ;
 			ft.commit();
@@ -520,7 +525,7 @@ public class MainActivity extends MySuperScaler implements IMenuListener, OnTouc
 					isBackEnabled = false;
 				}
 
-				switchTab(fragment);
+				switchTab(fragment, true);
 				
 				return;
 			}

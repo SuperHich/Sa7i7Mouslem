@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.sa7i7mouslem.R;
 import com.sa7i7mouslem.entity.Comment;
 import com.sa7i7mouslem.utils.MySuperScaler;
+import com.sa7i7mouslem.utils.SAMFonts;
 
 public class CommentsAdapter extends ArrayAdapter<Comment> {
 
@@ -45,6 +46,9 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
 			// get the elements in the layout
 			holder.txv_title = (TextView) convertView.findViewById(R.id.txv_title_comment); 
 			holder.txv_text = (TextView) convertView.findViewById(R.id.txv_text_comment);
+			
+			holder.txv_title.setTypeface(SAMFonts.getMOHANDFont());
+			holder.txv_text.setTypeface(SAMFonts.getMOHANDFont());
 			
 			convertView.setTag(holder);
 		}

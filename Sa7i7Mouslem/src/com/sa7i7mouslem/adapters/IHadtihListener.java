@@ -9,5 +9,5 @@ public interface IHadtihListener {
 	void onHadithComment(int position);
 	void onHadithShare(int position);
 	void onHadithPause(int position);
-
+	void onHadithTextClicked(int position);
 }

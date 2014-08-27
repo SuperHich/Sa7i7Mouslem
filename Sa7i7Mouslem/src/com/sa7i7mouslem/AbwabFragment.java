@@ -16,8 +16,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.sa7i7mouslem.adapters.AbwabAdapter;
 import com.sa7i7mouslem.adapters.IFragmentNotifier;
 import com.sa7i7mouslem.entity.Chapter;
-import com.sa7i7mouslem.externals.SABDataBase;
-import com.sa7i7mouslem.externals.SABManager;
+import com.sa7i7mouslem.externals.SAMDataBase;
+import com.sa7i7mouslem.externals.SAMManager;
 import com.sa7i7mouslem.utils.LoadMoreListView;
 import com.sa7i7mouslem.utils.MySuperScaler;
 import com.sa7i7mouslem.utils.LoadMoreListView.OnLoadMoreListener;
@@ -30,7 +30,7 @@ public class AbwabFragment extends ListFragment implements IFragmentNotifier{
 	private AbwabAdapter adapter;
 	private ArrayList<Chapter> abwab = new ArrayList<Chapter>();
 	
-	private SABDataBase sabDB;
+	private SAMDataBase sabDB;
 	
 	private int bookId = -1;
 	private int pageId = 0;
@@ -44,14 +44,14 @@ public class AbwabFragment extends ListFragment implements IFragmentNotifier{
 		super.onAttach(activity);
 		
 		sabDB = ((MainActivity)getActivity()).sabDB;
-		SABManager.getInstance(getActivity()).setFragmentNotifier(this);
+		SAMManager.getInstance(getActivity()).setFragmentNotifier(this);
 	}
 	
 	@Override
 	public void onDetach() {
 		super.onDetach();
 		
-		SABManager.getInstance(getActivity()).setFragmentNotifier(null);
+		SAMManager.getInstance(getActivity()).setFragmentNotifier(null);
 
 	}
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
@@ -14,9 +15,12 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -27,9 +31,9 @@ import com.sa7i7mouslem.adapters.IFragmentNotifier;
 import com.sa7i7mouslem.adapters.IHadtihListener;
 import com.sa7i7mouslem.entity.Hadith;
 import com.sa7i7mouslem.externals.IDownloadNotifier;
-import com.sa7i7mouslem.externals.SABDataBase;
-import com.sa7i7mouslem.externals.SABDownloadManager;
-import com.sa7i7mouslem.externals.SABManager;
+import com.sa7i7mouslem.externals.SAMDataBase;
+import com.sa7i7mouslem.externals.SAMDownloadManager;
+import com.sa7i7mouslem.externals.SAMManager;
 import com.sa7i7mouslem.mediaplayer.IMediaPlayerNotifier;
 import com.sa7i7mouslem.mediaplayer.SABMediaPlayer;
 import com.sa7i7mouslem.utils.LoadMoreListView;
@@ -38,7 +42,7 @@ import com.sa7i7mouslem.utils.MySuperScaler;
 import com.sa7i7mouslem.utils.Utils;
 
 
-public class AhadithFragment extends ListFragment implements IHadtihListener, IMediaPlayerNotifier, IDownloadNotifier, IFragmentNotifier{
+public class AhadithFragment extends ListFragment implements IHadtihListener, IMediaPlayerNotifier, IDownloadNotifier, IFragmentNotifier, OnMenuItemClickListener{
 
 	public static final String ARG_AHADITH = "ahadith_type";
 	public static final String ARG_AHADITH_SEARCH = "ahadith_search_type";
@@ -56,13 +60,13 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	private int pageId = 0;
 	
 	private int positionToUpdate, positionToListen = -1;
-	private SABDataBase sabDB;
-	private SABDownloadManager sabDownloadManager;
+	private SAMDataBase sabDB;
+	private SAMDownloadManager sabDownloadManager;
 	private TextView txv_emptyList;
 	private TextView mTxvProgress;
 	private SeekBar mSeekBar;
 	private int lastTotalTime;
-	
+	private String hadithText;
 
 	public AhadithFragment() {
 		// Empty constructor required for fragment subclasses
@@ -73,15 +77,15 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 		super.onAttach(activity);
 		
 		sabDB = ((MainActivity)getActivity()).sabDB;
-		sabDownloadManager = new SABDownloadManager(activity, this);
-		SABManager.getInstance(getActivity()).setFragmentNotifier(this);
+		sabDownloadManager = new SAMDownloadManager(activity, this);
+		SAMManager.getInstance(getActivity()).setFragmentNotifier(this);
 	}
 	
 	@Override
 	public void onDetach() {
 		super.onDetach();
 		
-		SABManager.getInstance(getActivity()).setFragmentNotifier(null);
+		SAMManager.getInstance(getActivity()).setFragmentNotifier(null);
 	}
 
 	@Override
@@ -232,6 +236,27 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 		
 		initAhadith();
 		
+	}
+	
+	@Override
+	public void onHadithTextClicked(int position) {
+		hadithText = ahadith.get(position).getText();
+		View view = getSelecedView(position);
+		if(view == null)
+		{
+			Log.w("", "Unable to get view for desired position, because it's not being displayed on screen.");
+			return;
+		}
+		showMenu(view);
+	}
+	
+	public void showMenu(View v) {
+	    PopupMenu popup = new PopupMenu(getActivity(), v);
+
+	    // This activity implements OnMenuItemClickListener
+	    popup.setOnMenuItemClickListener(this);
+	    popup.inflate(R.menu.context_menu);
+	    popup.show();
 	}
 
 	@Override
@@ -618,6 +643,33 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 		}
 		mSeekBar = (SeekBar) view.findViewById(R.id.seekbar_progress);
 		mTxvProgress = (TextView) view.findViewById(R.id.txv_progress);
+	}
+	
+	private void copyHadithToClipboard(int position){
+		
+		int sdk = android.os.Build.VERSION.SDK_INT;
+		if(sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+		    android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+		    clipboard.setText(hadithText);
+		} else {
+		    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE); 
+		    android.content.ClipData clip = android.content.ClipData.newPlainText("text label",hadithText);
+		    clipboard.setPrimaryClip(clip);
+		}
+		
+		Toast.makeText(getActivity(), getString(R.string.hadith_copied), Toast.LENGTH_SHORT).show();
+		
+	}
+
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		 switch (item.getItemId()) {
+	        case R.id.hadith_copy:
+	            copyHadithToClipboard(0);
+	            return true;
+	        default:
+	            return false;
+	    }
 	}
 	
 }

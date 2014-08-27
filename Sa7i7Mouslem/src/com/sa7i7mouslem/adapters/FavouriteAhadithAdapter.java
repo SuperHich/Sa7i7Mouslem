@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.sa7i7mouslem.R;
 import com.sa7i7mouslem.entity.Hadith;
-import com.sa7i7mouslem.externals.SABDataBase;
+import com.sa7i7mouslem.externals.SAMDataBase;
 import com.sa7i7mouslem.utils.MySuperScaler;
 
 public class FavouriteAhadithAdapter extends ArrayAdapter<Hadith> {
@@ -92,12 +92,12 @@ public class FavouriteAhadithAdapter extends ArrayAdapter<Hadith> {
 
 		if(hadith.isShown()){
 			holder.textview.setMaxLines(Integer.MAX_VALUE);
-			holder.textview.setText(Html.fromHtml(SABDataBase.formatHadith(hadith.getText()).concat(".")));
+			holder.textview.setText(Html.fromHtml(SAMDataBase.formatHadith(hadith.getText()).concat(".")));
 			holder.btn_showMore.setBackgroundResource(R.drawable.showless_selector);
 		}
 		else{
 			holder.textview.setMaxLines(2);
-			holder.textview.setText(Html.fromHtml(SABDataBase.formatHadith(hadith.getText()).concat(" ... ")));
+			holder.textview.setText(Html.fromHtml(SAMDataBase.formatHadith(hadith.getText()).concat(" ... ")));
 			holder.btn_showMore.setBackgroundResource(R.drawable.showmore_selector);
 		}
 

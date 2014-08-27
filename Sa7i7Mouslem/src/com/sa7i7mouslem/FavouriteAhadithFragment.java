@@ -15,8 +15,8 @@ import android.widget.Toast;
 import com.sa7i7mouslem.adapters.FavouriteAhadithAdapter;
 import com.sa7i7mouslem.adapters.IHadtihListener;
 import com.sa7i7mouslem.entity.Hadith;
-import com.sa7i7mouslem.externals.SABDataBase;
-import com.sa7i7mouslem.externals.SABManager;
+import com.sa7i7mouslem.externals.SAMDataBase;
+import com.sa7i7mouslem.externals.SAMManager;
 import com.sa7i7mouslem.utils.MySuperScaler;
 
 
@@ -27,7 +27,7 @@ public class FavouriteAhadithFragment extends ListFragment implements IHadtihLis
 	private FavouriteAhadithAdapter adapter;
 	private ArrayList<Hadith> ahadith = new ArrayList<Hadith>();
 
-	private SABDataBase sabDB;
+	private SAMDataBase sabDB;
 	private TextView txv_emptyList;
 
 	public FavouriteAhadithFragment() {
@@ -45,7 +45,7 @@ public class FavouriteAhadithFragment extends ListFragment implements IHadtihLis
 	public void onDetach() {
 		super.onDetach();
 
-		SABManager.getInstance(getActivity()).setDownloadNotifier(null);
+		SAMManager.getInstance(getActivity()).setDownloadNotifier(null);
 	}
 
 	@Override
@@ -142,6 +142,10 @@ public class FavouriteAhadithFragment extends ListFragment implements IHadtihLis
 
 	@Override
 	public void onHadithShare(int position) {
+	}
+	
+	@Override
+	public void onHadithTextClicked(int position) {
 	}
 
 }

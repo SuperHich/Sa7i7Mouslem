@@ -18,8 +18,8 @@ import android.widget.Toast;
 
 import com.sa7i7mouslem.adapters.IFragmentNotifier;
 import com.sa7i7mouslem.entity.Comment;
-import com.sa7i7mouslem.externals.SABDataBase;
-import com.sa7i7mouslem.externals.SABManager;
+import com.sa7i7mouslem.externals.SAMDataBase;
+import com.sa7i7mouslem.externals.SAMManager;
 import com.sa7i7mouslem.utils.MySuperScaler;
 
 @SuppressLint("ValidFragment")
@@ -30,7 +30,7 @@ public class AddCommentFragment extends Fragment {
     private Button btn_remove, btn_add;
     private int hadithId;
     private Comment selectedComment;
-	private SABDataBase sabDB;
+	private SAMDataBase sabDB;
 	private IFragmentNotifier fragNotifier, fragNotifier2;
 	private boolean isNewComment = true;
 
@@ -125,8 +125,8 @@ public class AddCommentFragment extends Fragment {
     	
     	sabDB = ((MainActivity)getActivity()).sabDB;
     	
-    	fragNotifier = SABManager.getInstance(getActivity()).getFragmentNotifier();
-    	fragNotifier2 = SABManager.getInstance(getActivity()).getFragmentNotifier2();
+    	fragNotifier = SAMManager.getInstance(getActivity()).getFragmentNotifier();
+    	fragNotifier2 = SAMManager.getInstance(getActivity()).getFragmentNotifier2();
     	
     }
     

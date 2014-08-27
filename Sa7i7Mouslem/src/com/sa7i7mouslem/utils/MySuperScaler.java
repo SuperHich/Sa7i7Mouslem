@@ -1,7 +1,7 @@
 package com.sa7i7mouslem.utils;
 
-import com.sa7i7mouslem.externals.SABDataBase;
-import com.sa7i7mouslem.externals.SABManager;
+import com.sa7i7mouslem.externals.SAMDataBase;
+import com.sa7i7mouslem.externals.SAMManager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -45,8 +45,8 @@ public class MySuperScaler extends FragmentActivity {
 	protected boolean isFirstStart = true;
 	
 	public static boolean isTablet ;
-	public SABDataBase sabDB;
-	public SABManager sabManager;
+	public SAMDataBase sabDB;
+	public SAMManager sabManager;
 	
 	
 	@Override
@@ -55,8 +55,8 @@ public class MySuperScaler extends FragmentActivity {
 		
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
-		sabDB = new SABDataBase(this);
-		sabManager = SABManager.getInstance(this);
+		sabDB = new SAMDataBase(this);
+		sabManager = SAMManager.getInstance(this);
 		
 		memoryAnalyser();
 		
@@ -206,7 +206,7 @@ public class MySuperScaler extends FragmentActivity {
 		thisAct = this;
 		
 		if(sabDB == null)
-			sabDB = new SABDataBase(this);
+			sabDB = new SAMDataBase(this);
 	}
 	
 	@Override

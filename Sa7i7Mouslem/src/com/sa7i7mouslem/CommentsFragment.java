@@ -28,8 +28,8 @@ import com.sa7i7mouslem.adapters.CommentsAdapter;
 import com.sa7i7mouslem.adapters.IFragmentNotifier;
 import com.sa7i7mouslem.entity.Comment;
 import com.sa7i7mouslem.entity.Hadith;
-import com.sa7i7mouslem.externals.SABDataBase;
-import com.sa7i7mouslem.externals.SABManager;
+import com.sa7i7mouslem.externals.SAMDataBase;
+import com.sa7i7mouslem.externals.SAMManager;
 import com.sa7i7mouslem.utils.MySuperScaler;
 
 
@@ -42,7 +42,7 @@ public class CommentsFragment extends ListFragment implements IFragmentNotifier,
 	private TextView txv_text, txv_title;
 	private Button btn_showMore, btn_add_comment, btn_back;
 	
-	private SABDataBase sabDB;
+	private SAMDataBase sabDB;
 	private Hadith hadith;
 
 	public CommentsFragment() {
@@ -57,7 +57,7 @@ public class CommentsFragment extends ListFragment implements IFragmentNotifier,
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		
-		SABManager.getInstance(getActivity()).setFragmentNotifier2(this);
+		SAMManager.getInstance(getActivity()).setFragmentNotifier2(this);
 		sabDB = ((MainActivity)getActivity()).sabDB;
 	}
 	
@@ -65,7 +65,7 @@ public class CommentsFragment extends ListFragment implements IFragmentNotifier,
 	public void onDetach() {
 		super.onDetach();
 
-		SABManager.getInstance(getActivity()).setFragmentNotifier2(null);
+		SAMManager.getInstance(getActivity()).setFragmentNotifier2(null);
 	}
 
 	@Override
@@ -144,13 +144,13 @@ public class CommentsFragment extends ListFragment implements IFragmentNotifier,
 		if(isShown){
 			txv_text.setMovementMethod(new ScrollingMovementMethod());
 			txv_text.setMaxHeight(((MainActivity) getActivity()).screen_height / 2);
-			txv_text.setText(Html.fromHtml(SABDataBase.formatHadith(hadith.getText()).concat(".")));
+			txv_text.setText(Html.fromHtml(SAMDataBase.formatHadith(hadith.getText()).concat(".")));
 			btn_showMore.setBackgroundResource(R.drawable.showless_selector);
 		}
 		else{
 			txv_text.setMovementMethod(null);
 			txv_text.setMaxLines(2);
-			txv_text.setText(Html.fromHtml(SABDataBase.formatHadith(hadith.getText()).concat("...")));
+			txv_text.setText(Html.fromHtml(SAMDataBase.formatHadith(hadith.getText()).concat("...")));
 			btn_showMore.setBackgroundResource(R.drawable.showmore_selector);
 		}
 	}
@@ -186,7 +186,7 @@ public class CommentsFragment extends ListFragment implements IFragmentNotifier,
                     	   comments.remove(position);
                     	   adapter.notifyDataSetChanged();
                     	   
-                    	   SABManager.getInstance(getActivity()).getFragmentNotifier().requestRefrech();
+                    	   SAMManager.getInstance(getActivity()).getFragmentNotifier().requestRefrech();
                        }
                    }
                })

@@ -15,8 +15,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.sa7i7mouslem.adapters.BooksAdapter;
 import com.sa7i7mouslem.adapters.IFragmentNotifier;
 import com.sa7i7mouslem.entity.Book;
-import com.sa7i7mouslem.externals.SABDataBase;
-import com.sa7i7mouslem.externals.SABManager;
+import com.sa7i7mouslem.externals.SAMDataBase;
+import com.sa7i7mouslem.externals.SAMManager;
 import com.sa7i7mouslem.utils.MySuperScaler;
 
 
@@ -25,7 +25,7 @@ public class BooksFragment extends ListFragment implements IFragmentNotifier{
 	private BooksAdapter adapter;
 	private ArrayList<Book> books = new ArrayList<Book>();
 	
-	private SABDataBase sabDB;
+	private SAMDataBase sabDB;
 
 	public BooksFragment() {
 		// Empty constructor required for fragment subclasses
@@ -36,14 +36,14 @@ public class BooksFragment extends ListFragment implements IFragmentNotifier{
 		super.onAttach(activity);
 		
 		sabDB = ((MainActivity)getActivity()).sabDB;
-		SABManager.getInstance(getActivity()).setFragmentNotifier(this);
+		SAMManager.getInstance(getActivity()).setFragmentNotifier(this);
 	}
 	
 	@Override
 	public void onDetach() {
 		super.onDetach();
 		
-		SABManager.getInstance(getActivity()).setFragmentNotifier(null);
+		SAMManager.getInstance(getActivity()).setFragmentNotifier(null);
 
 	}
 
