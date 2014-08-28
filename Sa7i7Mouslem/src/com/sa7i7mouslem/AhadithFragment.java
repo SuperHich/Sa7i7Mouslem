@@ -343,8 +343,8 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 			}else if(Utils.isOnline(getActivity()))
 			{
 //				String mp3 = "http://tondeapel.net/wp-content/uploads/2012/09/Iphone_Ringtone.mp3";
-				String mp3 = "http://prophetmuhammadforall.com/media/audios/Bismillah.mp3";
-				//				String mp3 = hadith.getLink();
+//				String mp3 = "http://prophetmuhammadforall.com/media/audios/Bismillah.mp3";
+				String mp3 = hadith.getLink();
 				sabPlayer.playFromUrlWithCompletion(mp3);
 			}else{
 				Toast.makeText(getActivity(), R.string.error_internet_connexion, Toast.LENGTH_LONG).show();
@@ -420,8 +420,8 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	    mSeekBar.setMax(100);
 		
 		Hadith hadith = ahadith.get(position);
-//		String soundFile = hadith.getLink();
-		String soundFile = "http://prophetmuhammadforall.com/media/audios/Bismillah.mp3";
+		String soundFile = hadith.getLink();
+//		String soundFile = "http://prophetmuhammadforall.com/media/audios/Bismillah.mp3";
 		
 		boolean isCanceled = true;
 		
