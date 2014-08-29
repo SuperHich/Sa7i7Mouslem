@@ -48,4 +48,6 @@
     <string name="player_error">خطأ أثناء تدفق هذا الصوت</string>
     <string name="copy">نسخ الحديث</string>
     <string name="hadith_copied">تم نسخ الحديث</string>
+    <string name="noorapp_title">تنفيذ مؤسسة شبكة نور الاسلام للتطبيقات والبرمجيات</string>
+    <string name="alsunnah_title">شبكة السنة النبوية وعلومها</string>
 </resources>

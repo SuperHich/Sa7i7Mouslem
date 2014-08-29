@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="640px"
+    android:layout_height="1136px"
+    android:background="@drawable/bg" >
+
+    <ListView
+        android:id="@+id/android:list"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="75px"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50px"
+        android:text="@string/alsunnah_title"
+        android:textColor="#fff"
+        android:gravity="center_horizontal"/>
+
+    <ImageView
+        android:layout_width="202px"
+        android:layout_height="200px"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20px"
+        android:background="@drawable/sunnah_sigle"
+        android:layout_below="@+id/title" />
+
+    <LinearLayout
+        android:layout_width="640px"
+        android:layout_height="600px"
+        android:layout_marginTop="500px"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="640px"
+            android:layout_height="80px" >
+
+            <TextView
+                android:id="@+id/site"
+                android:layout_width="wrap_content"
+                android:layout_height="50px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50px"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="www.alssunnah.com"
+                android:textColor="#fff"
+                android:textStyle="bold|italic" />
+
+            <ImageView
+                android:id="@+id/img_siteweb"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50px"
+                android:background="@drawable/sigle" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="640px"
+            android:layout_height="80px" >
+
+            <TextView
+                android:id="@+id/twitter"
+                android:layout_width="wrap_content"
+                android:layout_height="50px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50px"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="\@alssunnah"
+                android:textColor="#fff"
+                android:textStyle="bold|italic" />
+
+            <ImageView
+                android:id="@+id/img_twitter"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50px"
+                android:background="@drawable/twitter" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="640px"
+            android:layout_height="80px" >
+
+            <TextView
+                android:id="@+id/youtube"
+                android:layout_width="wrap_content"
+                android:layout_height="50px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50px"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="Alssunnah1428"
+                android:textColor="#fff"
+                android:textStyle="bold|italic" />
+
+            <ImageView
+                android:id="@+id/img_youtube"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50px"
+                android:background="@drawable/youtube" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="640px"
+            android:layout_height="80px" >
+
+            <TextView
+                android:id="@+id/whatsapp"
+                android:layout_width="wrap_content"
+                android:layout_height="50px"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="50px"
+                android:layout_marginTop="20px"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="0591155650"
+                android:textColor="#fff"
+                android:textStyle="bold|italic" />
+
+            <ImageView
+                android:id="@+id/img_whatsapp"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50px"
+                android:background="@drawable/whatsapp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="640px"
+            android:layout_height="80px" >
+
+            <TextView
+                android:id="@+id/facebook"
+                android:layout_width="wrap_content"
+                android:layout_height="50px"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="50px"
+                android:layout_marginTop="20px"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="Alssunah"
+                android:textColor="#fff"
+                android:textStyle="bold|italic" />
+
+            <ImageView
+                android:id="@+id/img_facebook"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50px"
+                android:background="@drawable/facebook" />
+        </RelativeLayout>
+        
+         <RelativeLayout
+            android:layout_width="640px"
+            android:layout_height="80px" >
+
+            <TextView
+                android:id="@+id/instagram"
+                android:layout_width="wrap_content"
+                android:layout_height="50px"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="50px"
+                android:layout_marginTop="20px"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="Alssunnah"
+                android:textColor="#fff"
+                android:textStyle="bold|italic" />
+
+            <ImageView
+                android:id="@+id/img_instagram"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50px"
+                android:background="@drawable/instagram" />
+        </RelativeLayout>
+        
+    </LinearLayout>
+
+</RelativeLayout>
