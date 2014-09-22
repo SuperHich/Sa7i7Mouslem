@@ -186,6 +186,8 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 					break;
 				}
 				
+				adapter.setSearchKeyWord(ahadith_keyword);
+				
 				if(ahadith.size() > 0)
 					Toast.makeText(getActivity(), getString(R.string.we_found) + " " + ahadith.size() + " " + getString(R.string.hadith), Toast.LENGTH_SHORT).show();
 				else

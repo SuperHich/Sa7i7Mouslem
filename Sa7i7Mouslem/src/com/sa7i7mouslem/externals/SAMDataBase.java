@@ -735,7 +735,7 @@ public class SAMDataBase extends SQLiteAssetHelper {
     	return header + text + tail;
     }
     
-    private String cleanPonctuation(String text){
+    public static String cleanPonctuation(String text){
     	text = text.replace("َ", ""); // fatha
     	text = text.replace("ُ", ""); // dhamma
         text = text.replace("ِ", ""); // kasra
