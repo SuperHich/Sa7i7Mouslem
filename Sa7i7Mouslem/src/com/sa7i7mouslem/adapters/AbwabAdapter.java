@@ -53,7 +53,7 @@ public class AbwabAdapter extends ArrayAdapter<Chapter> {
 			holder = (ViewHolder)convertView.getTag();
 		}
 		
-		int size = (int) MySuperScaler.screen_width / 22 ;
+		int size = (int) MySuperScaler.screen_width / 21 ;
 		holder.textview.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
 
 		/*

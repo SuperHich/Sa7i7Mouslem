@@ -19,8 +19,8 @@ import com.sa7i7mouslem.entity.Chapter;
 import com.sa7i7mouslem.externals.SAMDataBase;
 import com.sa7i7mouslem.externals.SAMManager;
 import com.sa7i7mouslem.utils.LoadMoreListView;
-import com.sa7i7mouslem.utils.MySuperScaler;
 import com.sa7i7mouslem.utils.LoadMoreListView.OnLoadMoreListener;
+import com.sa7i7mouslem.utils.MySuperScaler;
 
 
 public class AbwabFragment extends ListFragment implements IFragmentNotifier{

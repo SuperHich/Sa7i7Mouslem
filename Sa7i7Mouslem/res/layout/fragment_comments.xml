@@ -99,7 +99,9 @@
             android:divider="@color/blue_light"
             android:dividerHeight="10px"
             android:gravity="center"
-            android:scrollingCache="false" />
+            android:scrollingCache="false" 
+            android:background="@android:color/white"
+            android:listSelector="@drawable/list_selector"/>
     </RelativeLayout>
 
 </RelativeLayout>

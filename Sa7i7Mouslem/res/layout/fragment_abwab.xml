@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@android:color/white"
+    android:listSelector="@drawable/list_selector"
     android:scrollingCache="false"
     android:layout_margin="10px" 
     android:divider="@color/blue_turquoise"
