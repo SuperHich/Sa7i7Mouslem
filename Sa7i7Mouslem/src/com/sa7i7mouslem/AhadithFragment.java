@@ -17,10 +17,13 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.PopupMenu.OnMenuItemClickListener;
+import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -53,6 +56,10 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	public static final int TYPE_AHADITH_KEYWORD_ID = 10;
 	public static final int TYPE_AHADITH_BY_BAB = 20;
 	
+	public static final int TEXT_SIZE_MIN = 5;
+	public static final int TEXT_SIZE_MAX = 45;
+	private static final String TAG = AhadithFragment.class.getSimpleName();
+	
 	private AhadithAdapter adapter;
 	private ArrayList<Hadith> ahadith = new ArrayList<Hadith>();
 	private int ahadith_typeId = 0, ahadith_search_typeId = 1, bab_id = 1;
@@ -68,6 +75,11 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	private SeekBar mSeekBar;
 	private int lastTotalTime;
 	private String hadithText;
+	
+	private Button btn_minus, btn_plus;
+	private TextView txv_size, txv_size_name;
+	private SAMManager mManager;
+
 
 	public AhadithFragment() {
 		// Empty constructor required for fragment subclasses
@@ -79,14 +91,15 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 		
 		sabDB = ((MainActivity)getActivity()).sabDB;
 		sabDownloadManager = new SAMDownloadManager(activity, this);
-		SAMManager.getInstance(getActivity()).setFragmentNotifier(this);
+		mManager = SAMManager.getInstance(getActivity());
+		mManager.setFragmentNotifier(this);
 	}
 	
 	@Override
 	public void onDetach() {
 		super.onDetach();
 		
-		SAMManager.getInstance(getActivity()).setFragmentNotifier(null);
+		mManager.setFragmentNotifier(null);
 	}
 
 	@Override
@@ -106,16 +119,66 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 		bab_id = getArguments().getInt(ARG_BAB_ID);
 		
 		txv_emptyList = (TextView) rootView.findViewById(R.id.txv_emptyList);
+		
+		btn_minus = (Button) rootView.findViewById(R.id.btn_minus);
+		btn_plus = (Button) rootView.findViewById(R.id.btn_plus);
+		txv_size = (TextView) rootView.findViewById(R.id.txv_size);
+		txv_size_name = (TextView) rootView.findViewById(R.id.txv_size_name);
+		
 		txv_emptyList.setTypeface(SAMFonts.getMOHANDFont());
+		txv_size.setTypeface(SAMFonts.getMOHANDFont());
+		txv_size_name.setTypeface(SAMFonts.getMOHANDFont());
+		
+		btn_minus.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				int size = mManager.getTextSize();
+				int realSize = mManager.getRealTextSize();
+				if(size-1 >= TEXT_SIZE_MIN)
+				{
+					mManager.setTextSizes(size-1);
+					mManager.setRealTextSizes(realSize+1);
+					
+					refreshTextSize();
+				}
+			}
+		});
+		
+		btn_plus.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				int size = mManager.getTextSize();
+				int realSize = mManager.getRealTextSize();
+				if(size+1 <= TEXT_SIZE_MAX)
+				{
+					mManager.setTextSizes(size+1);
+					mManager.setRealTextSizes(realSize-1);
+					
+					refreshTextSize();
+				}
+			}
+		});
 		
 		if(!(MySuperScaler.scaled))
 			MySuperScaler.scaleViewAndChildren(rootView, MySuperScaler.scale);
 
 
 		adapter = new AhadithAdapter(getActivity(), R.layout.hadith_list_item, ahadith, this);
-
+		refreshTextSize();
+		
 		return rootView;
 	}
+	
+	private void refreshTextSize(){
+		
+		adapter.setTextSize(mManager.getRealTextSize());
+		txv_size.setText(String.valueOf(mManager.getTextSize()));
+		
+		adapter.notifyDataSetChanged();
+	}
+
 
 	private class LoadDataTask extends AsyncTask<Void, Void, Void> {
 
@@ -237,6 +300,25 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 					new LoadDataTask().execute();
 				}
 			});
+		
+		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				Hadith hadith = ahadith.get(position);
+				
+				if(mManager.getBookMarkPosition() != hadith.getId())
+					mManager.setBookMarkPosition(hadith.getId());
+				else
+					mManager.setBookMarkPosition(-1);
+				
+				adapter.notifyDataSetChanged();
+				
+				return true;
+			}
+		});
 		
 		initAhadith();
 		
@@ -519,6 +601,15 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 		ahadith.get(positionToListen).setPlaying(false);
 		adapter.notifyDataSetChanged();
 		
+		nextHadith();
+		
+	}
+	
+	private void nextHadith(){
+		if(positionToListen+1 < ahadith.size())
+		{
+			onHadithListen(positionToListen+1);
+		}
 	}
 	
 	@Override
@@ -549,6 +640,8 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 		
 		cleanPreviousPlayer(positionToListen);
 		adapter.notifyDataSetChanged();
+		
+		nextHadith();
 	}
 	
 	private String MillisToTime(int timeInMillis){

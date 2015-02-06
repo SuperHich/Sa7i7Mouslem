@@ -226,4 +226,30 @@ public class SAMManager {
 		this.fragmentNotifier2 = fragmentNotifier2;
 	}
 	
+	public void setTextSizes(int textSize){
+		editor.putInt("text_size", textSize);
+		editor.commit();
+	}
+	
+	public int getTextSize(){
+		return settings.getInt("text_size", 23);
+	}
+	
+	public void setRealTextSizes(int textSize){
+		editor.putInt("real_text_size", textSize);
+		editor.commit();
+	}
+	
+	public int getRealTextSize(){
+		return settings.getInt("real_text_size", 23);
+	}
+	
+	public void setBookMarkPosition(int bookmark){
+		editor.putInt("bookmark", bookmark);
+		editor.commit();
+	}
+	
+	public int getBookMarkPosition(){
+		return settings.getInt("bookmark", -1);
+	}
 }

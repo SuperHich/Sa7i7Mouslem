@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.sa7i7mouslem.R;
 import com.sa7i7mouslem.entity.Hadith;
 import com.sa7i7mouslem.externals.SAMDataBase;
+import com.sa7i7mouslem.externals.SAMManager;
 import com.sa7i7mouslem.utils.MySuperScaler;
 import com.sa7i7mouslem.utils.SAMFonts;
 
@@ -34,6 +35,17 @@ public class AhadithAdapter extends ArrayAdapter<Hadith> {
 	LayoutInflater inflater;
 	private boolean isEnabled = true;
 	private String searchKeyWord;
+	private int textSize = 23;
+	private SAMManager mManager;
+	
+	public void setTextSize(int textSize){
+		this.textSize = textSize;
+	}
+	
+	public int getTextSize(){
+		return textSize;
+	}
+
 
 	public AhadithAdapter(Context mContext, int layoutResourceId, ArrayList<Hadith> data, IHadtihListener listener) {
 
@@ -43,6 +55,7 @@ public class AhadithAdapter extends ArrayAdapter<Hadith> {
 		this.data = data;
 		this.listener = listener;
 		inflater = ((Activity) mContext).getLayoutInflater();
+		mManager = SAMManager.getInstance(mContext);
 	}
 
 	@Override
@@ -61,6 +74,7 @@ public class AhadithAdapter extends ArrayAdapter<Hadith> {
 			// get the elements in the layout
 			holder.textview = (TextView) convertView.findViewById(R.id.text); 
 			holder.btn_showMore = (Button) convertView.findViewById(R.id.btn_showMore);
+			holder.btn_bookmark = (Button) convertView.findViewById(R.id.btn_bookmark);
 			holder.btn_listen = (Button) convertView.findViewById(R.id.btn_listen);
 			holder.btn_download = (Button) convertView.findViewById(R.id.btn_download);
 			holder.btn_favorite = (Button) convertView.findViewById(R.id.btn_favorite);
@@ -170,9 +184,11 @@ public class AhadithAdapter extends ArrayAdapter<Hadith> {
 			holder = (ViewHolder)convertView.getTag();
 		}
 
-		int size = (int) MySuperScaler.screen_width / 23 ;
+		int size = (int) MySuperScaler.screen_width / textSize ;
 		holder.textview.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
-		holder.mTxvProgress.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+		
+		int sizeProgress = (int) MySuperScaler.screen_width / 23 ;
+		holder.mTxvProgress.setTextSize(TypedValue.COMPLEX_UNIT_PX, sizeProgress);
 
 		holder.textview.setTag(position);
 		holder.btn_showMore.setTag(position);
@@ -190,6 +206,11 @@ public class AhadithAdapter extends ArrayAdapter<Hadith> {
 		Hadith hadith = data.get(position);
 		String content = SAMDataBase.formatHadith(hadith.getText());
 
+		if(mManager.getBookMarkPosition() == hadith.getId())
+			holder.btn_bookmark.setVisibility(View.VISIBLE);
+		else
+			holder.btn_bookmark.setVisibility(View.GONE);
+		
 		if(searchKeyWord != null){
 			content = SAMDataBase.formatHadith(SAMDataBase.cleanPonctuation(hadith.getText()));
 			content = content.replaceAll(searchKeyWord, coloredWord(searchKeyWord));
@@ -292,6 +313,7 @@ public class AhadithAdapter extends ArrayAdapter<Hadith> {
 	{
 		TextView textview; 
 		Button btn_showMore;
+		Button btn_bookmark;
 		Button btn_listen;
 		Button btn_pause;
 		Button btn_download;

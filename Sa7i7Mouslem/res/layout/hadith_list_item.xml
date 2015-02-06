@@ -27,6 +27,17 @@
             android:layout_marginLeft="30px"
             android:layout_marginTop="20px"
             android:background="@drawable/showmore_selector" />
+        
+        <Button
+            android:id="@+id/btn_bookmark"
+            android:layout_width="110px"
+            android:layout_height="30px"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/text"
+            android:layout_marginRight="50px"
+            android:layout_marginTop="20px"
+            android:background="@drawable/showmore_selector" 
+            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/bottom_menu"
