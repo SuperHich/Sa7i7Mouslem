@@ -17,7 +17,7 @@ import android.os.AsyncTask;
 import com.sa7i7mouslem.R;
 
 /**
- * AlMoufasserAlSaghir
+ * SAM
  * @author HICHEM LAROUSSI - RAMI TRABELSI
  * Copyright (c) 2014 Zad Group. All rights reserved.
  */
@@ -39,6 +39,14 @@ public class SABMediaPlayer {
 		this.context = context;
 		this.notifier = notifier;
 		
+	}
+	
+	public IMediaPlayerNotifier getNotifier() {
+		return notifier;
+	}
+
+	public void setNotifier(IMediaPlayerNotifier notifier) {
+		this.notifier = notifier;
 	}
 	
 	public boolean isPlaying(){
@@ -86,7 +94,8 @@ public class SABMediaPlayer {
 				@Override
 				public void onCompletion(MediaPlayer mp) {
 
-					notifier.onCompletion();
+					if(notifier != null)
+						notifier.onCompletion();
 
 				}
 			});
@@ -113,7 +122,8 @@ public class SABMediaPlayer {
 				@Override
 				public void onCompletion(MediaPlayer mp) {
 
-					notifier.onCompletion();
+					if(notifier != null)
+						notifier.onCompletion();
 					stop();
 
 				}
@@ -121,7 +131,8 @@ public class SABMediaPlayer {
 
 			player.prepare();
 			
-			notifier.onConfigProgress(player.getDuration());
+			if(notifier != null)
+				notifier.onConfigProgress(player.getDuration());
 			player.start();
 			
 			mProgressThread = new ProgressThread();
@@ -215,7 +226,8 @@ public class SABMediaPlayer {
 					/**
 					 * Starting MediaPlayer...
 					 */
-					notifier.onConfigProgress(player.getDuration());
+					if(notifier != null)
+						notifier.onConfigProgress(player.getDuration());
 					player.start();
 					
 					mProgressThread = new ProgressThread();
@@ -231,7 +243,8 @@ public class SABMediaPlayer {
 						stop();		
 					}
 					
-					notifier.onErrorPlayer();
+					if(notifier != null)
+						notifier.onErrorPlayer();
 
 				}
 
@@ -251,7 +264,8 @@ public class SABMediaPlayer {
 				@Override
 				public void onCompletion(MediaPlayer mp) {
 
-					notifier.onCompletion();
+					if(notifier != null)
+						notifier.onCompletion();
 					stop();
 
 				}
@@ -305,7 +319,8 @@ public class SABMediaPlayer {
 		public void run() {
 			while(true && !isInterrupted()){
 				try {
-					notifier.onProgressPlayer(player.getCurrentPosition());
+					if(notifier != null)
+						notifier.onProgressPlayer(player.getCurrentPosition());
 					Thread.sleep(1000);
 				}catch(Exception e){}
 			}

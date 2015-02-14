@@ -9,9 +9,13 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.sa7i7mouslem.adapters.AbwabAdapter;
 import com.sa7i7mouslem.adapters.IFragmentNotifier;
@@ -21,6 +25,7 @@ import com.sa7i7mouslem.externals.SAMManager;
 import com.sa7i7mouslem.utils.LoadMoreListView;
 import com.sa7i7mouslem.utils.LoadMoreListView.OnLoadMoreListener;
 import com.sa7i7mouslem.utils.MySuperScaler;
+import com.sa7i7mouslem.utils.SAMFonts;
 
 
 public class AbwabFragment extends ListFragment implements IFragmentNotifier{
@@ -34,6 +39,10 @@ public class AbwabFragment extends ListFragment implements IFragmentNotifier{
 	
 	private int bookId = -1;
 	private int pageId = 0;
+	
+	private LinearLayout listen_layout;
+	private TextView txv_title_listen;
+	private ImageView btn_play;
 
 	public AbwabFragment() {
 		// Empty constructor required for fragment subclasses
@@ -69,6 +78,15 @@ public class AbwabFragment extends ListFragment implements IFragmentNotifier{
 			bookId = getArguments().getInt(ARG_BOOKID);
 		
 		View rootView = inflater.inflate(R.layout.fragment_abwab, container, false);
+		
+		listen_layout = (LinearLayout) rootView.findViewById(R.id.layout_top);
+		txv_title_listen = (TextView) rootView.findViewById(R.id.txv_title_listen);
+		btn_play = (ImageView) rootView.findViewById(R.id.btn_play);
+		
+		txv_title_listen.setTypeface(SAMFonts.getMOHANDFont());
+		
+		if(bookId != -1)
+			listen_layout.setVisibility(View.VISIBLE);
 
 		if(!(MySuperScaler.scaled))
 			MySuperScaler.scaleViewAndChildren(rootView, MySuperScaler.scale);
@@ -114,6 +132,14 @@ public class AbwabFragment extends ListFragment implements IFragmentNotifier{
 					new LoadDataTask().execute();
 				}
 			});
+		
+		btn_play.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				((MainActivity) getActivity()).onBookToListenClicked(bookId);
+			}
+		});
 	}
 
 	@Override
@@ -126,6 +152,12 @@ public class AbwabFragment extends ListFragment implements IFragmentNotifier{
 	public void setEnabled(boolean isEnabled) {
 		getListView().setEnabled(isEnabled);
 		getListView().setClickable(isEnabled);
+	}
+	
+	@Override
+	public void unregisterFromPlayer() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	private class LoadDataTask extends AsyncTask<Void, Void, Void> {

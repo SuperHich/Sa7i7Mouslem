@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.util.TypedValue;
@@ -19,11 +25,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.PopupMenu;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -32,6 +39,7 @@ import android.widget.Toast;
 import com.sa7i7mouslem.adapters.AhadithAdapter;
 import com.sa7i7mouslem.adapters.IFragmentNotifier;
 import com.sa7i7mouslem.adapters.IHadtihListener;
+import com.sa7i7mouslem.entity.Chapter;
 import com.sa7i7mouslem.entity.Hadith;
 import com.sa7i7mouslem.externals.IDownloadNotifier;
 import com.sa7i7mouslem.externals.SAMDataBase;
@@ -52,9 +60,11 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	public static final String ARG_AHADITH_SEARCH = "ahadith_search_type";
 	public static final String ARG_AHADITH_KEYWORD_TEXT = "ahadith_keyword";
 	public static final String ARG_BAB_ID = "bab_id";
+	public static final String ARG_BOOK_ID = "book_id";
 	
 	public static final int TYPE_AHADITH_KEYWORD_ID = 10;
 	public static final int TYPE_AHADITH_BY_BAB = 20;
+	public static final int TYPE_AHADITH_BY_BOOK = 30;
 	
 	public static final int TEXT_SIZE_MIN = 5;
 	public static final int TEXT_SIZE_MAX = 45;
@@ -62,7 +72,7 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	
 	private AhadithAdapter adapter;
 	private ArrayList<Hadith> ahadith = new ArrayList<Hadith>();
-	private int ahadith_typeId = 0, ahadith_search_typeId = 1, bab_id = 1;
+	private int ahadith_typeId = 0, ahadith_search_typeId = 1, bab_id = 1, book_id = -1;
 	private String ahadith_keyword;
 	private SABMediaPlayer sabPlayer;
 	private int pageId = 0;
@@ -76,10 +86,11 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	private int lastTotalTime;
 	private String hadithText;
 	
-	private Button btn_minus, btn_plus;
+	private ImageView btn_minus, btn_plus;
 	private TextView txv_size, txv_size_name;
 	private SAMManager mManager;
 
+	private boolean isContinueMode = false;
 
 	public AhadithFragment() {
 		// Empty constructor required for fragment subclasses
@@ -99,6 +110,7 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	public void onDetach() {
 		super.onDetach();
 		
+		sabPlayer.setNotifier(null);
 		mManager.setFragmentNotifier(null);
 	}
 
@@ -106,7 +118,6 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		sabPlayer = new SABMediaPlayer(getActivity(), this);
 	}
 	
 	@Override
@@ -117,11 +128,12 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 		ahadith_search_typeId = getArguments().getInt(ARG_AHADITH_SEARCH);
 		ahadith_keyword = getArguments().getString(ARG_AHADITH_KEYWORD_TEXT);
 		bab_id = getArguments().getInt(ARG_BAB_ID);
+		book_id = getArguments().getInt(ARG_BOOK_ID);
 		
 		txv_emptyList = (TextView) rootView.findViewById(R.id.txv_emptyList);
 		
-		btn_minus = (Button) rootView.findViewById(R.id.btn_minus);
-		btn_plus = (Button) rootView.findViewById(R.id.btn_plus);
+		btn_minus = (ImageView) rootView.findViewById(R.id.btn_minus);
+		btn_plus = (ImageView) rootView.findViewById(R.id.btn_plus);
 		txv_size = (TextView) rootView.findViewById(R.id.txv_size);
 		txv_size_name = (TextView) rootView.findViewById(R.id.txv_size_name);
 		
@@ -220,59 +232,91 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	
 	private void initAhadith(){
 
-		try {
-			ahadith.clear();
-			
-			switch (ahadith_typeId) {
-			case 0:
-				ahadith.addAll(sabDB.getFavoriteHadiths());				
-				break;
-			case 1:
-				ahadith.addAll(sabDB.getAllHadithsWithPage(pageId));				
-				break;
-			case 2:
-				ahadith.addAll(sabDB.getCommentedHadiths());				
-				break;
-			case TYPE_AHADITH_KEYWORD_ID:
-				switch (ahadith_search_typeId) {
-				case 0:
-					ahadith.addAll(sabDB.searchHadithFromFavoriteWithText(ahadith_keyword));
-					break;
-				case 1:
-					ahadith.addAll(sabDB.searchHadithWithText(ahadith_keyword));
-					break;
-				case 2:
-					ahadith.addAll(sabDB.searchHadithFromCommentedWithText(ahadith_keyword));
-					break;
-				default:
-					ahadith.addAll(sabDB.searchHadithByBabWithText(ahadith_keyword, bab_id));
-					break;
-				}
-				
-				adapter.setSearchKeyWord(ahadith_keyword);
-				
-				if(ahadith.size() > 0)
-					Toast.makeText(getActivity(), getString(R.string.we_found) + " " + ahadith.size() + " " + getString(R.string.hadith), Toast.LENGTH_SHORT).show();
-				else
-					Toast.makeText(getActivity(), getString(R.string.no_hadith_found) + " \"" + ahadith_keyword  + "\"" , Toast.LENGTH_SHORT).show();
-					
-				break;
-			case TYPE_AHADITH_BY_BAB:
-				ahadith.addAll(sabDB.getAllHadithsWithBabId(bab_id));
-				break;
-			default:
-				break;
+		new AsyncTask<Void, Void, Void>() {
+
+			@Override
+			protected void onPreExecute() {
+				ahadith.clear();
 			}
-
-			adapter.notifyDataSetChanged();
 			
-			toggleEmptyMessage();
+			@Override
+			protected Void doInBackground(Void... params) {
+				try {
+					switch (ahadith_typeId) {
+					case 0:
+						ahadith.addAll(sabDB.getFavoriteHadiths());				
+						break;
+					case 1:
+						ahadith.addAll(sabDB.getAllHadithsWithPage(pageId));				
+						break;
+					case 2:
+						ahadith.addAll(sabDB.getCommentedHadiths());				
+						break;
+					case TYPE_AHADITH_KEYWORD_ID:
+						switch (ahadith_search_typeId) {
+						case 0:
+							ahadith.addAll(sabDB.searchHadithFromFavoriteWithText(ahadith_keyword));
+							break;
+						case 1:
+							ahadith.addAll(sabDB.searchHadithWithText(ahadith_keyword));
+							break;
+						case 2:
+							ahadith.addAll(sabDB.searchHadithFromCommentedWithText(ahadith_keyword));
+							break;
+						default:
+							ahadith.addAll(sabDB.searchHadithByBabWithText(ahadith_keyword, bab_id));
+							break;
+						}
+						
+						adapter.setSearchKeyWord(ahadith_keyword);
+						
+						if(ahadith.size() > 0)
+							Toast.makeText(getActivity(), getString(R.string.we_found) + " " + ahadith.size() + " " + getString(R.string.hadith), Toast.LENGTH_SHORT).show();
+						else
+							Toast.makeText(getActivity(), getString(R.string.no_hadith_found) + " \"" + ahadith_keyword  + "\"" , Toast.LENGTH_SHORT).show();
+							
+						break;
+					case TYPE_AHADITH_BY_BAB:
+						ahadith.addAll(sabDB.getAllHadithsWithBabId(bab_id));
+						break;
+					case TYPE_AHADITH_BY_BOOK:
+						ArrayList<Chapter> chapters = sabDB.getAllBabsFromBook(book_id);
+						for (Chapter chapter : chapters) {
+							ahadith.addAll(sabDB.getAllHadithsWithBabId(chapter.getBabId()));
+						}
+						break;
+					default:
+						break;
+					}
+
+				} catch (Exception e) {
+
+					e.printStackTrace();
+
+				}
+				return null;
+			}
 			
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
+			@Override
+			protected void onPostExecute(Void result) {
+				adapter.notifyDataSetChanged();
+				toggleEmptyMessage();
+				
+				new Handler(new Callback() {
+					
+					@Override
+					public boolean handleMessage(Message msg) {
+						if(ahadith_typeId == TYPE_AHADITH_BY_BOOK && !ahadith.isEmpty()){
+							ignorePopup = true;
+							isContinueMode = true;
+							onHadithListen(0);
+						}
+						return false;
+					}
+				}).sendMessageDelayed(new Message(), 1000);
+			}
+		}.execute();
+		
 	}
 	
 	private void toggleEmptyMessage() {
@@ -286,6 +330,9 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		
+		sabPlayer = ((MainActivity) getActivity()).getSabPlayer();
+		sabPlayer.setNotifier(this);
 		
 		getListView().setAdapter(adapter);
 		getListView().setCacheColorHint(Color.TRANSPARENT);
@@ -385,6 +432,13 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	@Override
 	public void onHadithListen(int position) {
 		
+		if(!isPopupShown && !ignorePopup)
+		{	
+			showListenPopup(position);
+			return;
+		}else
+			isPopupShown = false;
+		
 		Hadith hadith = ahadith.get(position);
 		if(!hadith.isBottomLayoutShown())
 		{
@@ -444,6 +498,8 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 			ahadith.get(position).setBottomLayoutShown(false);
 			ahadith.get(position).setPlaying(false);
 			mSeekBar.setProgress(0);
+			
+			ignorePopup = false;
 		}
 			    
 	    
@@ -606,10 +662,12 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	}
 	
 	private void nextHadith(){
-		if(positionToListen+1 < ahadith.size())
+		if(positionToListen+1 < ahadith.size() && isContinueMode)
 		{
+			ignorePopup = true;
 			onHadithListen(positionToListen+1);
-		}
+		}else
+			ignorePopup = false;
 	}
 	
 	@Override
@@ -724,6 +782,11 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	}
 	
 	@Override
+	public void unregisterFromPlayer() {
+		sabPlayer.setNotifier(null);
+	}
+	
+	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		
@@ -767,6 +830,57 @@ public class AhadithFragment extends ListFragment implements IHadtihListener, IM
 	        default:
 	            return false;
 	    }
+	}
+	
+	boolean isPopupShown = false;
+	boolean ignorePopup = false;
+	public void showListenPopup(final int position){
+		CharSequence[] listen_options = new CharSequence[]{getString(R.string.listen_single), 
+				getString(R.string.listen_continue), getString(R.string.cancel)};
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder
+		.setTitle(R.string.choose_listen_mode)
+		.setItems(listen_options, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which) {
+				case 0:
+					isPopupShown = true;
+					isContinueMode = false;
+					onHadithListen(position);
+					return;
+				case 1:
+					isPopupShown = true;
+					isContinueMode = true;
+					onHadithListen(position);
+					return;
+				default:
+					isPopupShown = false;
+					return;
+				}
+			}
+		});
+
+		// Create the AlertDialog object and return it
+		final AlertDialog alert = builder.create();
+		alert.setOnShowListener(new DialogInterface.OnShowListener() {
+			@Override
+			public void onShow(DialogInterface dialog) {
+				Button btnPositive = alert.getButton(Dialog.BUTTON_POSITIVE);
+				btnPositive.setTypeface(SAMFonts.getMOHANDFont());
+
+				int dialogTitle = getResources().getIdentifier( "alertTitle", "id", "android" );
+				TextView txv_title = (TextView) alert.findViewById(dialogTitle);
+//				TextView txv_message = (TextView) alert.findViewById(android.R.id.message);
+				
+				txv_title.setTypeface(SAMFonts.getMOHANDFont()); 
+//				txv_message.setTypeface(SVRFonts.getAqua()); 
+			}
+		});
+
+		alert.show();
 	}
 	
 }

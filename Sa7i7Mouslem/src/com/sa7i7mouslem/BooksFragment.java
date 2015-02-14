@@ -100,5 +100,11 @@ public class BooksFragment extends ListFragment implements IFragmentNotifier{
 		getListView().setEnabled(isEnabled);
 		getListView().setClickable(isEnabled);
 	}
+	
+	@Override
+	public void unregisterFromPlayer() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

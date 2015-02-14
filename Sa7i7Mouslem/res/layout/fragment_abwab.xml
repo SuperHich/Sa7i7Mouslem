@@ -1,13 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="640px"
+    android:layout_height="1136px" >
 
-<com.sa7i7mouslem.utils.LoadMoreListView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-   	android:id="@+id/android:list"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@android:color/white"
-    android:listSelector="@drawable/list_selector"
-    android:scrollingCache="false"
-    android:layout_margin="10px" 
-    android:divider="@color/blue_turquoise"
-    android:dividerHeight="5px"/>
+    <LinearLayout
+        android:id="@+id/layout_top"
+        android:layout_width="640px"
+        android:layout_height="70px"
+        android:layout_centerHorizontal="true"
+        android:background="@color/blue_light"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/btn_play"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="100px"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/play_button" />
+
+        <TextView
+            android:id="@+id/txv_title_listen"
+            android:layout_width="450px"
+            android:layout_height="70px"
+            android:layout_gravity="right"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@string/listen_continue"
+            android:textColor="#FFF"
+            android:textSize="20px" 
+            android:paddingRight="15px"/>
+    </LinearLayout>
+
+    <com.sa7i7mouslem.utils.LoadMoreListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_top"
+        android:layout_margin="10px"
+        android:background="@android:color/white"
+        android:divider="@color/blue_turquoise"
+        android:dividerHeight="5px"
+        android:gravity="center"
+        android:listSelector="@drawable/list_selector"
+        android:scrollingCache="false" />
+
+</RelativeLayout>

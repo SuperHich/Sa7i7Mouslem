@@ -51,4 +51,7 @@
     <string name="noorapp_title">تنفيذ مؤسسة شبكة نور الاسلام للتطبيقات والبرمجيات</string>
     <string name="alsunnah_title">شبكة السنة النبوية وعلومها</string>
     <string name="font_size">حجم الخط</string>
+    <string name="listen_continue">الاستماع المستمر</string>
+    <string name="listen_single">الاستماع إلى الحديث بمفرده</string>
+    <string name="choose_listen_mode">إختر طريقة الاستماع</string>
 </resources>

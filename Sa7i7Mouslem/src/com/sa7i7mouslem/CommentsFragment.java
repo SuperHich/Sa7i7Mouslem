@@ -175,6 +175,12 @@ public class CommentsFragment extends ListFragment implements IFragmentNotifier,
 		
 	}
 	
+	@Override
+	public void unregisterFromPlayer() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	private void showPopupMenu(final int position){
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.modifications)

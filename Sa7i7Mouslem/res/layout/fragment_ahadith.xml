@@ -2,7 +2,7 @@
     android:layout_width="640px"
     android:layout_height="1136px" >
 
-     <LinearLayout
+    <LinearLayout
         android:id="@+id/layout_top"
         android:layout_width="640px"
         android:layout_height="70px"
@@ -10,17 +10,14 @@
         android:background="@color/blue_light"
         android:orientation="horizontal" >
 
-        <Button
+        <ImageView
             android:id="@+id/btn_minus"
-            android:layout_width="45px"
-            android:layout_height="45px"
+            android:layout_width="50px"
+            android:layout_height="50px"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="50px"
-            android:background="@drawable/bkg_rounded_selector"
-            android:gravity="center"
-            android:text="-"
-            android:textColor="@color/blue_dark"
-            android:textSize="20px" />
+            android:scaleType="fitXY"
+            android:src="@drawable/minus_white_button" />
 
         <TextView
             android:id="@+id/txv_size"
@@ -31,18 +28,15 @@
             android:maxLines="1"
             android:text="25"
             android:textColor="#FFF"
-            android:textSize="23px" />
-
-        <Button
-            android:id="@+id/btn_plus"
-            android:layout_width="45px"
-            android:layout_height="45px"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/bkg_rounded_selector"
-            android:gravity="center"
-            android:text="+"
-            android:textColor="@color/blue_dark"
             android:textSize="20px" />
+
+        <ImageView
+            android:id="@+id/btn_plus"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:src="@drawable/plus_white_button" />
 
         <TextView
             android:id="@+id/txv_size_name"
@@ -53,19 +47,20 @@
             android:maxLines="1"
             android:text="@string/font_size"
             android:textColor="#FFF"
-            android:textSize="23px" />
+            android:textSize="20px" 
+            android:paddingRight="15px"/>
     </LinearLayout>
-    
+
     <TextView
         android:id="@+id/txv_emptyList"
         android:layout_width="400px"
         android:layout_height="150px"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="@string/empty_list"
-        android:textSize="30px"
         android:maxLines="1"
+        android:text="@string/empty_list"
         android:textColor="#000"
+        android:textSize="30px"
         android:visibility="gone" />
 
     <com.sa7i7mouslem.utils.LoadMoreListView
